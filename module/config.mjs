@@ -4540,6 +4540,9 @@ DND5E.activityTypes = {
   summon: {
     documentClass: activities.SummonActivity
   },
+  transform: {
+    documentClass: activities.TransformActivity
+  },
   utility: {
     documentClass: activities.UtilityActivity
   }
