@@ -155,7 +155,7 @@ Hooks.once("init", function() {
     types: ["character"],
     label: "DND5E.SheetClassCharacterLegacy"
   });
-  DocumentSheetConfig.registerSheet(Actor, "dnd5e", applications.actor.ActorSheet5eCharacter2, {
+  DocumentSheetConfig.registerSheet(Actor, "dnd5e", applications.actor.CharacterActorSheet, {
     types: ["character"],
     makeDefault: true,
     label: "DND5E.SheetClassCharacter"
