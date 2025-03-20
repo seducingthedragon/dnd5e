@@ -5,7 +5,6 @@ import EffectsElement from "../components/effects.mjs";
 import MovementSensesConfig from "../shared/movement-senses-config.mjs";
 import CreatureTypeConfig from "../shared/creature-type-config.mjs";
 
-import ActorSheetFlags from "./sheet-flags.mjs";
 import SourceConfig from "../source-config.mjs";
 
 import AdvancementConfirmationDialog from "../advancement/advancement-confirmation-dialog.mjs";
@@ -784,9 +783,6 @@ export default class ActorSheet5e extends ActorSheetMixin(ActorSheet) {
         break;
       case "treasure":
         app = new TreasureConfig({ document: this.actor });
-        break;
-      case "flags":
-        app = new ActorSheetFlags(this.actor);
         break;
       case "source":
         app = new SourceConfig({ document: this.actor });
