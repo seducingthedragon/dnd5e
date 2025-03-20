@@ -830,7 +830,7 @@ export async function preloadHandlebarsTemplates() {
     paths[`dnd5e.${path.split("/").pop().replace(".hbs", "")}`] = path;
   }
 
-  return loadTemplates(paths);
+  return foundry.applications.handlebars.loadTemplates(paths);
 }
 
 /* -------------------------------------------- */
@@ -1202,7 +1202,7 @@ export function getHumanReadableAttributeLabel(attr, { actor, item }={}) {
  * @param {string[]} prefixes
  */
 export function localizeSchema(schema, prefixes) {
-  Localization.localizeDataModel({ schema }, { prefixes });
+  foundry.helpers.Localization.localizeDataModel({ schema }, { prefixes });
 }
 
 /* -------------------------------------------- */
