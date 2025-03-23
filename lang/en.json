@@ -4042,10 +4042,16 @@
       "Features": {
         "Label": "Features"
       },
+      "GearProficiency": {
+        "Label": "Gear Proficiency"
+      },
       "Health": {
         "Label": "Hit Points & Hit Dice"
       },
       "Hint": "These details will be retained from the source actor.",
+      "Languages": {
+        "Label": "Languages"
+      },
       "Mental": {
         "Hint": "Keep intelligence, wisdom, and charisma scores.",
         "Label": "Mental Abilities"
@@ -4056,6 +4062,9 @@
       },
       "Proficiency": {
         "Label": "Proficiency Bonus"
+      },
+      "Resistances": {
+        "Label": "Damage Resistances"
       },
       "Saves": {
         "Label": "Save Proficiencies"

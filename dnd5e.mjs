@@ -120,6 +120,7 @@ Hooks.once("init", function() {
 
     // Adjust Wild Shape and Polymorph presets.
     DND5E.transformation.presets.wildshape.settings.keep.delete("hp");
+    DND5E.transformation.presets.wildshape.settings.keep.delete("languages");
     DND5E.transformation.presets.wildshape.settings.keep.delete("type");
     delete DND5E.transformation.presets.polymorph.settings.addTemp;
     DND5E.transformation.presets.polymorph.settings.keep.delete("hp");
