@@ -151,32 +151,34 @@ export default class TransformDialog extends Dialog5e {
    * @protected
    */
   async _prepareSettingsContext(context, options) {
-    context.categories = ["keep", "merge", "effects", "other"].map(cat => ({
-      category: cat,
-      title: `DND5E.TRANSFORM.Setting.FIELDS.${cat}.label`,
-      hint: game.i18n.has(`DND5E.TRANSFORM.Setting.FIELDS.${cat}.hint`)
-        ? `DND5E.TRANSFORM.Setting.FIELDS.${cat}.hint` : "",
-      settings: Object.entries(CONFIG.DND5E.transformation[cat]).map(([name, config]) => ({
-        field: new BooleanField({ label: config.label, hint: config.hint }),
-        input: context.inputs.createCheckboxInput,
-        name: `${cat}.${name}`,
-        value: this.#settings[cat]?.has(name)
-      }))
-    }));
     const fields = TransformationSetting.schema.fields;
-    context.categories[3].settings.push(
-      {
-        field: fields.tempFormula,
-        name: "tempFormula",
-        value: this.#settings.tempFormula
-      },
+    const otherSettings = [
+      { field: fields.tempFormula, name: "tempFormula", value: this.#settings.tempFormula },
+      { field: fields.minimumAC, name: "minimumAC", value: this.#settings.minimumAC },
       {
         field: fields.transformTokens,
         input: context.inputs.createCheckboxInput,
         name: "transformTokens",
         value: this.#settings.transformTokens
       }
-    );
+    ];
+
+    context.categories = ["keep", "merge", "effects", "other"].map(cat => ({
+      category: cat,
+      title: `DND5E.TRANSFORM.Setting.FIELDS.${cat}.label`,
+      hint: game.i18n.has(`DND5E.TRANSFORM.Setting.FIELDS.${cat}.hint`)
+        ? `DND5E.TRANSFORM.Setting.FIELDS.${cat}.hint` : "",
+      settings: [
+        ...Object.entries(CONFIG.DND5E.transformation[cat]).map(([name, config]) => ({
+          field: new BooleanField({ label: config.label, hint: config.hint }),
+          input: context.inputs.createCheckboxInput,
+          name: `${cat}.${name}`,
+          value: this.#settings[cat]?.has(name)
+        })),
+        ...(cat === "other" ? otherSettings : [])
+      ]
+    }));
+
     return context;
   }
 
@@ -204,10 +206,11 @@ export default class TransformDialog extends Dialog5e {
       const config = foundry.utils.getProperty(CONFIG.DND5E.transformation, field.name);
       if ( !config?.disables?.length ) return;
       const names = config.disables.map(d => d.includes("*") ? `[name^="${d.replace("*", "")}"]` : `[name="${d}"]`);
-      const selector = `dnd5e-checkbox:is(${names.join(",")}):not([name="${field.name}"])`;
+      const selector = `:is(${names.join(",")}):not([name="${field.name}"])`;
       this.element.querySelectorAll(selector).forEach(element => {
         element.disabled = field.value;
-        if ( element.disabled ) element.checked = false;
+        if ( element.disabled && element.tagName === "DND5E-CHECKBOX" ) element.checked = false;
+        else if ( element.disabled ) element.value = "";
       });
     };
     if ( changed ) handleDisable(changed);
